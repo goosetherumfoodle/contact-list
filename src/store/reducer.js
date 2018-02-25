@@ -1,7 +1,16 @@
 import {fromJS} from 'immutable'
 
-const initialState = fromJS({})
+import * as actionTypes from './actionTypes'
+
+const initialState = fromJS({
+  contacts: []
+})
 
 export default function reducer(state = initialState, action) {
-  return state
+  switch (action.type) {
+  case actionTypes.SET_CONTACTS:
+    return state.set('contacts', fromJS(action.payload.contacts))
+  default:
+    return state
+  }
 }
