@@ -7,7 +7,6 @@ import {Link} from 'react-router-dom'
 
 class AppsTableActions extends Component {
   render() {
-    console.log(`row: ${JSON.stringify(row)}`)
     const row = this.props.row
     return (
       <Link to={'/settings/3'}>

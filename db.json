@@ -114,12 +114,6 @@
       "number": "+12285515150",
       "context": "facebook",
       "name": "Cushing Mckeown"
-    },
-    {
-      "number": "new number",
-      "context": "new context",
-      "name": "new name",
-      "id": 3
     }
-  ]
+   ]
 }

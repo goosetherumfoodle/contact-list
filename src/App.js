@@ -23,10 +23,16 @@ class App extends Component {
           <div className="row">
             <div className="card col-6 offset-3">
               <div className="card-header">
-        Add New Contact
+                {'Add New Contact'}
               </div>
               <div className="card-body">
-                <NewContactForm />
+                <NewContactForm
+                  missingFields={this.props.contactFormMissingFields}
+                  handleFormSubmit={this.props.handleContactFormSubmit}
+                  fields={this.props.newContactFormFields}
+                  setNewContactName={this.props.setNewContactName}
+                  setNewContactContext={this.props.setNewContactContext}
+                  setNewContactNumber={this.props.setNewContactNumber} />
               </div>
             </div>
           </div>
@@ -41,13 +47,19 @@ class App extends Component {
 
 const mapStateToProps = ({contact}) => {
   return {
-    contacts: contact.get('contacts')
+    contacts: contact.get('contacts'),
+    newContactFormFields: contact.get('newContactForm'),
+    contactFormMissingFields: contact.get('contactFormMissingFields'),
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchInitialContacts: () => dispatch(actions.fetchInitialContacts())
+    fetchInitialContacts: () => dispatch(actions.fetchInitialContacts()),
+    setNewContactName: (name) => dispatch(actions.setNewContactName(name)),
+    setNewContactNumber: (number) => dispatch(actions.setNewContactNumber(number)),
+    setNewContactContext: (context) => dispatch(actions.setNewContactContext(context)),
+    handleContactFormSubmit: (fields) => {dispatch(actions.submitNewContact(fields))}
   }
 }
 

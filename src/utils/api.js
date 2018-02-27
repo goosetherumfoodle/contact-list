@@ -6,4 +6,8 @@ const base = axios.create({
 
 function getContacts() {return base.get('/contacts')}
 
-export {getContacts}
+function postContact({id, name, number, context}) {
+  return base.post('/contacts', {id, number, name, number, context})
+}
+
+export {getContacts, postContact}
