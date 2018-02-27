@@ -1,4 +1,4 @@
- import React from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import {BrowserRouter} from 'react-router-dom'
 import {Provider} from 'react-redux'
@@ -7,9 +7,9 @@ import { reducer as sematable } from 'sematable'
 import createSagaMiddleware from 'redux-saga'
 
 import registerServiceWorker from './registerServiceWorker'
-import './index.css';
+import './index.css'
 import '../node_modules/react-select/dist/react-select.css' // TODO FIX THIS
-import App from './App';
+import App from './App'
 import contact from './store/reducer'
 import rootSaga from './store/sagas'
 
@@ -29,9 +29,9 @@ const store = createStore(
 sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(<Provider store={store}>
-                <BrowserRouter>
-                <App />
-                </BrowserRouter>
-                </Provider>,
-                document.getElementById('root'))
-registerServiceWorker();
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+</Provider>,
+document.getElementById('root'))
+registerServiceWorker()

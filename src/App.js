@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {connect} from 'react-redux'
 
 import * as actions from './store/actions'
 import DemoTable from './components/DemoTable'
-import logo from './logo.svg';
-import './App.css';
+import logo from './logo.svg'
+import './App.css'
 import NewContactForm from './components/NewContactForm'
 
 class App extends Component {
@@ -20,22 +20,22 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <div className="container">
-        <div className="row">
-        <div className="card col-6 offset-3">
-        <div className="card-header">
+          <div className="row">
+            <div className="card col-6 offset-3">
+              <div className="card-header">
         Add New Contact
-        </div>
-        <div className="card-body">
-        <NewContactForm />
-        </div>
-        </div>
-        </div>
-        <div className="row">
-        <DemoTable data={this.props.contacts.toJS()}/>
-        </div>
+              </div>
+              <div className="card-body">
+                <NewContactForm />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <DemoTable data={this.props.contacts.toJS()}/>
+          </div>
         </div>
       </div>
-    );
+    )
   }
 }
 

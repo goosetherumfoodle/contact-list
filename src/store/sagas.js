@@ -1,5 +1,5 @@
 import {call, put, takeEvery} from 'redux-saga/effects'
-import "regenerator-runtime/runtime"
+import 'regenerator-runtime/runtime'
 
 import * as actionTypes from './actionTypes'
 import * as actions from './actions'

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import sematable, { Table } from 'sematable';
+import React, { Component } from 'react'
+import sematable, { Table } from 'sematable'
 import PropTypes from 'prop-types'
 
-import DemoTableActions from './DemoTableActions';
+import DemoTableActions from './DemoTableActions'
 
 const columns = [
   {key: 'name', header: 'Name', sortable: true, searchable: true},
@@ -26,9 +26,9 @@ class DemoTable extends Component {
         selectable
         columns={columns}
       />
-    );
+    )
   }
 }
 
-DemoTable.propTypes = propTypes;
-export default sematable('allApps', DemoTable, columns);
+DemoTable.propTypes = propTypes
+export default sematable('allApps', DemoTable, columns)
