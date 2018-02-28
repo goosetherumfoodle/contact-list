@@ -61,24 +61,97 @@ describe('reducer', () => {
   it('sets new contact number', () => {
     const initialState = fromJS({
       newContactForm: {
+        countryCode: 'US',
         name: null,
         phoneNumber: null,
+        prettyPrintPhoneNumber: null,
         context: null
       }
     })
-    const action = actions.setNewContactNumber('+12675558080')
+    const action = actions.setNewContactNumber('518.321.0486')
 
     const nextState = reducer(initialState, action)
 
     expect(nextState).to.equal(
       fromJS({
         newContactForm: {
+          countryCode: 'US',
           name: null,
-          phoneNumber: '+12675558080',
-          context: null
+          phoneNumber: '518.321.0486',
+          prettyPrintPhoneNumber: '(518) 321-0486',
+          context: null,
+          formattedNumber: '+15183210486',
+          invalidNumber: false
         }
       })
     )
+  })
+
+  describe('realtime number formatting and validation', () => {
+    context('with partial number', () => {
+      it('shows prettyprint version and is invalid', () => {
+        const initialState = fromJS({
+          newContactForm: {
+            countryCode: 'US',
+            name: null,
+            phoneNumber: null,
+            context: null,
+            formattedNumber: null,
+            invalidNumber: false
+          }
+        })
+        const action = actions.setNewContactNumber('412987654')
+
+        const nextState = reducer(initialState, action)
+
+        expect(nextState).to.equal(
+          fromJS({
+            newContactForm: {
+              countryCode: 'US',
+              name: null,
+              phoneNumber: '412987654',
+              prettyPrintPhoneNumber: '(412) 987-654',
+              context: null,
+              formattedNumber: false,
+              invalidNumber: true
+            }
+          })
+        )
+      })
+    })
+
+    context('with full number', () => {
+      it('shows prettyprint version and is valid', () => {
+        const initialState = fromJS({
+          newContactForm: {
+            countryCode: 'US',
+            name: null,
+            phoneNumber: '412',
+            prettyPrintPhoneNumber: '(412)',
+            context: null,
+            formattedNumber: '+14129876540',
+            invalidNumber: true
+          }
+        })
+        const action = actions.setNewContactNumber('4129876540')
+
+        const nextState = reducer(initialState, action)
+
+        expect(nextState).to.equal(
+          fromJS({
+            newContactForm: {
+              countryCode: 'US',
+              name: null,
+              phoneNumber: '4129876540',
+              prettyPrintPhoneNumber: '(412) 987-6540',
+              context: null,
+              formattedNumber: '+14129876540',
+              invalidNumber: false
+            }
+          })
+        )
+      })
+    })
   })
 
   it('sets new contact context', () => {
@@ -104,7 +177,7 @@ describe('reducer', () => {
     )
   })
 
-    it('sets contact form missing fields', () => {
+  it('sets contact form missing fields', () => {
     const initialState = fromJS({contactFormMissingFields: false})
     const action = actions.setContactFormMissingFields(true)
 
@@ -123,6 +196,7 @@ describe('reducer', () => {
       newContactForm: {
         name: 'Super Hans',
         phoneNumber: '5555',
+        prettyPrintPhoneNumber: '(555) 5',
         context: 'juice bar',
         invalidNumber: true
       }
@@ -137,6 +211,7 @@ describe('reducer', () => {
         newContactForm: {
           name: '',
           phoneNumber: '',
+          prettyPrintPhoneNumber: '',
           context: '',
           formattedNumber: '',
           countryCode: 'US',
@@ -146,15 +221,14 @@ describe('reducer', () => {
     )
   })
 
-
   it('adds a contact', () => {
     const initialState = fromJS({
-        contacts: [{
-          context: 'work',
-          name: 'Bob Barker',
-          number: '+12675558080'
-        }]
-      })
+      contacts: [{
+        context: 'work',
+        name: 'Bob Barker',
+        number: '+12675558080'
+      }]
+    })
     const newContact = {
       context: 'flatmate',
       name: 'Jeremy',
@@ -179,57 +253,113 @@ describe('reducer', () => {
     )
   })
 
-  describe('phone number parsing', () => {
-    context('with a valid number', () => {
-      it('sets the formattedNumber', () => {
-        const initialState = fromJS({
-          newContactForm:{
-            phoneNumber: '(412) 454-2543',
-            countryCode: 'US',
-            formattedNumber: ''
-          }
-        })
-        const action = actions.parseNumber()
+  // todo: totally remove these
+  // I think we're just gonna do the formatting on input, not submission
+  // describe('phone number parsing', () => {
+  //   context('with a valid number', () => {
+  //     it('sets the formattedNumber', () => {
+  //       const initialState = fromJS({
+  //         newContactForm:{
+  //           phoneNumber: '(412) 454-2543',
+  //           countryCode: 'US',
+  //           formattedNumber: ''
+  //         }
+  //       })
+  //       const action = actions.parseNumber()
 
-        const nextState = reducer(initialState, action)
+  //       const nextState = reducer(initialState, action)
 
-        expect(nextState).to.equal(
-          fromJS({
-            newContactForm: {
-              phoneNumber: '(412) 454-2543',
-              formattedNumber: '+14124542543',
-              countryCode: 'US'
-            }
-          })
-        )
-      })
+  //       expect(nextState).to.equal(
+  //         fromJS({
+  //           newContactForm: {
+  //             phoneNumber: '(412) 454-2543',
+  //             formattedNumber: '+14124542543',
+  //             countryCode: 'US',
+  //             invalidNumber: false
+  //           }
+  //         })
+  //       )
+  //     })
+  //   })
+
+  //   context('with an invalid number', () => {
+  //     it('sets the formattedNumber', () => {
+  //       const initialState = fromJS({
+  //         newContactForm:{
+  //           phoneNumber: '8888-(454) 2543',
+  //           countryCode: 'US',
+  //           formattedNumber: '',
+  //           invalidNumber: false
+  //         }
+  //       })
+  //       const action = actions.parseNumber()
+
+  //       const nextState = reducer(initialState, action)
+
+  //       expect(nextState).to.equal(
+  //         fromJS({
+  //           newContactForm:{
+  //             phoneNumber: '8888-(454) 2543',
+  //             countryCode: 'US',
+  //             formattedNumber: false,
+  //             invalidNumber: true
+  //           }
+  //         })
+  //       )
+  //     })
+  //   })
+  // })
+
+  it('sets new contact country code', () => {
+    const initialState = fromJS({
+      newContactForm: {
+        countryCode: 'DE',
+        phoneNumber: '9876543210',
+        formattedNumber: null,
+        invalidNumber: null
+      }
     })
+    const action = actions.setNewContactCountryCode('US')
 
-    context('with an invalid number', () => {
-      it('sets the formattedNumber', () => {
-        const initialState = fromJS({
-          newContactForm:{
-            phoneNumber: '8888-(454) 2543',
-            countryCode: 'US',
-            formattedNumber: '',
-            invalidNumber: false
-          }
-        })
-        const action = actions.parseNumber()
+    const nextState = reducer(initialState, action)
 
-        const nextState = reducer(initialState, action)
-
-        expect(nextState).to.equal(
-          fromJS({
-            newContactForm:{
-              phoneNumber: '8888-(454) 2543',
-              countryCode: 'US',
-              formattedNumber: '',
-              invalidNumber: true
-            }
-          })
-        )
+    expect(nextState).to.equal(
+      fromJS({
+        newContactForm: {
+          countryCode: 'US',
+          phoneNumber: '9876543210',
+          prettyPrintPhoneNumber: '(987) 654-3210',
+          formattedNumber: '+19876543210',
+          invalidNumber: false
+        }
       })
+    )
+  })
+
+    it('setting general warning text', () => {
+    const initialState = fromJS({
+      newContactForm: {
+        generalWarning: false,
+        countryCode: 'DE',
+        phoneNumber: '9876543210',
+        formattedNumber: null,
+        invalidNumber: null
+      }
     })
+    const action = actions.setGeneralWarning('warning message')
+
+    const nextState = reducer(initialState, action)
+
+    expect(nextState).to.equal(
+      fromJS({
+      newContactForm: {
+        generalWarning: 'warning message',
+        countryCode: 'DE',
+        phoneNumber: '9876543210',
+        formattedNumber: null,
+        invalidNumber: null
+      }
+    })
+    )
   })
 })

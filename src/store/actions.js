@@ -57,4 +57,18 @@ export function setContactFormMissingFields(bool) {
   }
 }
 
+export function setNewContactCountryCode(code) {
+  return {
+    type: actionTypes.SET_NEW_CONTACT_COUNTRY_CODE,
+    payload: {code}
+  }
+}
+
+export function setGeneralWarning(message) {
+  return {
+    type: actionTypes.SET_GENERAL_WARNING,
+    payload: {message}
+  }
+}
+
 export function parseNumber() {return {type: actionTypes.PARSE_PHONE_NUMBER}}

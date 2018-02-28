@@ -32,7 +32,8 @@ class App extends Component {
                   fields={this.props.newContactFormFields}
                   setNewContactName={this.props.setNewContactName}
                   setNewContactContext={this.props.setNewContactContext}
-                  setNewContactNumber={this.props.setNewContactNumber} />
+                  setNewContactNumber={this.props.setNewContactNumber}
+                  setCountryCode={this.props.setCountryCode} />
               </div>
             </div>
           </div>
@@ -59,6 +60,7 @@ const mapDispatchToProps = dispatch => {
     setNewContactName: (name) => dispatch(actions.setNewContactName(name)),
     setNewContactNumber: (number) => dispatch(actions.setNewContactNumber(number)),
     setNewContactContext: (context) => dispatch(actions.setNewContactContext(context)),
+    setCountryCode: (code) => dispatch(actions.setNewContactCountryCode(code)),
     handleContactFormSubmit: (fields) => {dispatch(actions.submitNewContact(fields))}
   }
 }

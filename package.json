@@ -6,6 +6,7 @@
     "axios": "^0.18.0",
     "immutable": "^3.8.2",
     "libphonenumber-js": "^1.0.24",
+    "lodash": "^4.17.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
@@ -21,7 +22,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "mocha --require babel-core/register --require ./test/test_helper.js",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "libphonenumber-metadata": "libphonenumber-generate-metadata metadata.min.json --extended"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
