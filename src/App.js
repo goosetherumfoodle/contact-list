@@ -28,6 +28,7 @@ class App extends Component {
               <div className="card-body">
                 <NewContactForm
                   missingFields={this.props.contactFormMissingFields}
+                  warningMessage={this.props.contactFormWarning}
                   handleFormSubmit={this.props.handleContactFormSubmit}
                   fields={this.props.newContactFormFields}
                   setNewContactName={this.props.setNewContactName}
@@ -51,6 +52,7 @@ const mapStateToProps = ({contact}) => {
     contacts: contact.get('contacts'),
     newContactFormFields: contact.get('newContactForm'),
     contactFormMissingFields: contact.get('contactFormMissingFields'),
+    contactFormWarning: contact.getIn(['newContactForm', 'generalWarning'])
   }
 }
 

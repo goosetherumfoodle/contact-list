@@ -1,9 +1,9 @@
 import React from 'react'
 import metadata from '../metadata.min.json'
 
-function formErrors(missingFields) {
-  if (missingFields) {
-    return <div className='alert alert-danger'>Please fill out all contact fields</div>
+function formErrors(warning) {
+  if (!!warning) {
+    return <div className='alert alert-danger'>{warning}</div>
   } else {
     return null
   }
@@ -21,7 +21,7 @@ function eachCountryCode() {
 export default function NewContactForm(props) {
   return(<form onSubmit={e => {e.preventDefault(); props.handleFormSubmit({name: props.fields.get('name'), number: props.fields.get('phoneNumber'), context: props.fields.get('context')})}} >
     <div className="form-group">
-      {formErrors(props.missingFields)}
+      {formErrors(props.warningMessage)}
       <label for="exampleInputName1">Name</label>
       <input type="name" className="form-control" id="exampleInputName1" placeholder="Jen Hamilton" value={props.fields.get('name')} onChange={e => props.setNewContactName(e.target.value)} />
     </div>

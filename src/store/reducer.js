@@ -15,7 +15,8 @@ const initialState = fromJS({
     context: '',
     countryCode: 'US',
     formattedNumber: '',
-    invalidNumber: false
+    invalidNumber: false,
+    generalWarning: false
   },
   contacts: []
 })
