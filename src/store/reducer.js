@@ -1,5 +1,6 @@
 import {fromJS} from 'immutable'
-import _ from 'lodash/fp'
+import {compose} from 'lodash/fp'
+import {isString} from 'lodash'
 
 import * as actionTypes from './actionTypes'
 import {tryFormat} from '../utils/phoneParser'
@@ -20,6 +21,53 @@ const initialState = fromJS({
   },
   contacts: []
 })
+
+function isNotPresent(field) {
+  return !isString(field) || (field.length < 1)
+}
+
+const REQUIRED_FORM_FIELDS = ['name', 'context', 'formattedNumber']
+
+function checkFieldPresence(fields) {
+  return (present, val, key) => {
+    if (fields.includes(key) && isNotPresent(key)) {return false}
+    return true
+  }
+}
+
+function buildHasMissingFields(fields) {
+  return (form) => {
+    if (!!form.get(fields[0])) {return false}
+    return form.reduce(checkFieldPresence(fields), true)
+  }
+}
+
+const hasMissingFields = buildHasMissingFields(REQUIRED_FORM_FIELDS)
+
+function hasInvalidNumber(form) {
+  const invalidFlag = form.get('invalidNumber')
+  const fmtNumber = form.get('formattedNumber')
+  return invalidFlag || isNotPresent(fmtNumber)
+}
+
+function duplicateNumber(state) {
+  const newNumber = state.getIn(['newContactForm', 'formattedNumber'])
+  const contacts = state.get('contacts')
+  const found = contacts.find(contact => contact.get('number') === newNumber)
+  if (!!found) {return true}
+  return false
+}
+
+function validateForm(state) {
+  if (hasMissingFields(state.get('newContactForm'))) {
+    return 'Please fill in missing fields'
+  } else if (hasInvalidNumber(state.get('newContactForm'))) {
+    return 'Please check that the number you have entered is valid'
+  } else if (duplicateNumber(state)) {
+    return 'We already have a contact with this number'
+  }
+  return false
+}
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -46,12 +94,15 @@ export default function reducer(state = initialState, action) {
                 .set('newContactForm', initialState.get('newContactForm'))
   case actionTypes.SET_GENERAL_WARNING:
     return state.setIn(['newContactForm', 'generalWarning'], action.payload.message)
+  case actionTypes.VALIDATE_NEW_CONTACT_FORM:
+    const warningMsg = validateForm(state)
+    return state.setIn(['newContactForm', 'generalWarning'], warningMsg)
   default:
     return state
   }
 }
 
-const setPhoneMetaFields = _.compose([setNumberValidity, setFormattedNumber, setPrettyPrint])
+const setPhoneMetaFields = compose([setNumberValidity, setFormattedNumber, setPrettyPrint])
 
 function setPrettyPrint(state) {
   const cc     = state.getIn(['newContactForm', 'countryCode'])

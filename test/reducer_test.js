@@ -215,7 +215,8 @@ describe('reducer', () => {
           context: '',
           formattedNumber: '',
           countryCode: 'US',
-          invalidNumber: false
+          invalidNumber: false,
+          generalWarning: false
         }
       })
     )
@@ -361,5 +362,136 @@ describe('reducer', () => {
       }
     })
     )
+    })
+
+  describe('validating the new contact form', () => {
+    context('with valid fields', () => {
+      it('sets warning to false', () => {
+        const initialState = fromJS({
+          contacts: [],
+          newContactForm: {
+            name: 'Mark Corrigan',
+            context: 'Bank',
+            countryCode: 'US',
+            phoneNumber: '9876543210',
+            prettyPrintPhoneNumber: '(987) 654-3210',
+            formattedNumber: '+19876543210',
+            invalidNumber: false,
+            generalWarning: 'previous warning message'
+          }
+        })
+        const action = actions.validateNewContactForm()
+
+        const nextState = reducer(initialState, action)
+
+        expect(nextState).to.equal(
+          fromJS({
+            contacts: [],
+            newContactForm: {
+              name: 'Mark Corrigan',
+              context: 'Bank',
+              countryCode: 'US',
+              phoneNumber: '9876543210',
+              prettyPrintPhoneNumber: '(987) 654-3210',
+              formattedNumber: '+19876543210',
+              invalidNumber: false,
+              generalWarning: false
+            }
+          })
+        )
+      })
+    })
+
+    context('with missing fields', () => {
+      it('sets warning message about missing fields', () => {
+        const initialState = fromJS({
+          newContactForm: {
+            name: '',
+            context: 'horse',
+            generalWarning: false
+          }
+        })
+        const action = actions.validateNewContactForm()
+
+        const nextState = reducer(initialState, action)
+
+        expect(nextState).to.equal(
+          fromJS({
+          newContactForm: {
+            name: '',
+            context: 'horse',
+            generalWarning: 'Please fill in missing fields'
+          }
+        })
+        )
+      })
+    })
+
+    context('with an invalid phone number', () => {
+      it('sets warning message about an invalid number', () => {
+        const initialState = fromJS({
+          newContactForm: {
+            name: 'Jez',
+            context: 'flatmate',
+            formattedNumber: '',
+            invalidNumber: true
+          }
+        })
+        const action = actions.validateNewContactForm()
+
+        const nextState = reducer(initialState, action)
+
+        expect(nextState).to.equal(
+          fromJS({
+          newContactForm: {
+            name: 'Jez',
+            context: 'flatmate',
+            generalWarning: 'Please check that the number you have entered is valid',
+            formattedNumber: '',
+            invalidNumber: true
+          }
+        })
+        )
+      })
+    })
+
+    context('with number we are already storing', () => {
+      it('sets warning message about a duplicate number', () => {
+        const initialState = fromJS({
+          contacts: [{number: '+19876543210'}],
+          newContactForm: {
+            name: 'Mark Corrigan',
+            context: 'Bank',
+            countryCode: 'US',
+            phoneNumber: '9876543210',
+            prettyPrintPhoneNumber: '(987) 654-3210',
+            formattedNumber: '+19876543210',
+            invalidNumber: false,
+            generalWarning: false
+          }
+        })
+        const action = actions.validateNewContactForm()
+
+        const nextState = reducer(initialState, action)
+
+        expect(nextState).to.equal(
+          fromJS({
+            contacts: [
+              {number: '+19876543210'}
+            ],
+            newContactForm: {
+              name: 'Mark Corrigan',
+              context: 'Bank',
+              countryCode: 'US',
+              phoneNumber: '9876543210',
+              prettyPrintPhoneNumber: '(987) 654-3210',
+              formattedNumber: '+19876543210',
+              invalidNumber: false,
+              generalWarning: 'We already have a contact with this number'
+            }
+          })
+        )
+      })
+    })
   })
 })

@@ -71,4 +71,10 @@ export function setGeneralWarning(message) {
   }
 }
 
+export function validateNewContactForm() {
+  return {
+    type: actionTypes.VALIDATE_NEW_CONTACT_FORM
+  }
+}
+
 export function parseNumber() {return {type: actionTypes.PARSE_PHONE_NUMBER}}
