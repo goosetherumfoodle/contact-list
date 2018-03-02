@@ -402,7 +402,7 @@ describe('reducer', () => {
       })
     })
 
-    context('with missing fields', () => {
+    context('with missing name', () => {
       it('sets warning message about missing fields', () => {
         const initialState = fromJS({
           newContactForm: {
@@ -420,6 +420,31 @@ describe('reducer', () => {
           newContactForm: {
             name: '',
             context: 'horse',
+            generalWarning: 'Please fill in missing fields'
+          }
+        })
+        )
+      })
+    })
+
+    context('with missing context', () => {
+      it('sets warning message about missing fields', () => {
+        const initialState = fromJS({
+          newContactForm: {
+            name: 'Jez',
+            context: '',
+            generalWarning: false
+          }
+        })
+        const action = actions.validateNewContactForm()
+
+        const nextState = reducer(initialState, action)
+
+        expect(nextState).to.equal(
+          fromJS({
+          newContactForm: {
+            name: 'Jez',
+            context: '',
             generalWarning: 'Please fill in missing fields'
           }
         })

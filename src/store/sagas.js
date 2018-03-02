@@ -12,8 +12,8 @@ export function* fetchInitialContacts() {
 }
 
 export function* validateAndPostNewContact() {
-  const state = yield select(s => s.contact)
   yield put(actions.validateNewContactForm())
+  const state = yield select(s => s.contact)
   const warning = state.getIn(['newContactForm', 'generalWarning'])
   if (warning === false) {
     const formattedNumber = state.getIn(['newContactForm', 'formattedNumber'])

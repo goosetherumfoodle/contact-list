@@ -22,27 +22,27 @@ const initialState = fromJS({
   contacts: []
 })
 
-function isNotPresent(field) {
-  return !isString(field) || (field.length < 1)
+function isPresent(field) {
+  return isString(field) && (field.length > 0)
 }
 
-const REQUIRED_FORM_FIELDS = ['name', 'context', 'formattedNumber']
+function isNotPresent(field) {return !isPresent(field)}
 
-function checkFieldPresence(fields) {
-  return (present, val, key) => {
-    if (fields.includes(key) && isNotPresent(key)) {return false}
-    return true
+const REQUIRED_FORM_FIELDS = ['name', 'context']
+
+function checkForRequired(required) {
+  return (accum, val, key) => {
+    return accum && (!required.includes(key) || isPresent(val))
   }
 }
 
-function buildHasMissingFields(fields) {
+function buildHasRequiredFields(required) {
   return (form) => {
-    if (!!form.get(fields[0])) {return false}
-    return form.reduce(checkFieldPresence(fields), true)
+    return form.reduce(checkForRequired(required), true)
   }
 }
 
-const hasMissingFields = buildHasMissingFields(REQUIRED_FORM_FIELDS)
+const hasRequiredFields = buildHasRequiredFields(REQUIRED_FORM_FIELDS)
 
 function hasInvalidNumber(form) {
   const invalidFlag = form.get('invalidNumber')
@@ -54,12 +54,12 @@ function duplicateNumber(state) {
   const newNumber = state.getIn(['newContactForm', 'formattedNumber'])
   const contacts = state.get('contacts')
   const found = contacts.find(contact => contact.get('number') === newNumber)
-  if (!!found) {return true}
-  return false
+  return !!found
 }
 
 function validateForm(state) {
-  if (hasMissingFields(state.get('newContactForm'))) {
+  const hasRequired = hasRequiredFields(state.get('newContactForm'))
+  if (!hasRequired) {
     return 'Please fill in missing fields'
   } else if (hasInvalidNumber(state.get('newContactForm'))) {
     return 'Please check that the number you have entered is valid'
@@ -107,7 +107,7 @@ const setPhoneMetaFields = compose([setNumberValidity, setFormattedNumber, setPr
 function setPrettyPrint(state) {
   const cc     = state.getIn(['newContactForm', 'countryCode'])
   const number = state.getIn(['newContactForm', 'phoneNumber'])
-  const pretty = new AsYouType(cc, metadata).input(number) // TODO: extract this function
+  const pretty = new AsYouType(cc, metadata).input(number) // TODO: extract this function !!!!!!!!!!!!!!!!!!!!!
   return(state.setIn(['newContactForm', 'prettyPrintPhoneNumber'], pretty))
 }
 
