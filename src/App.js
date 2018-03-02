@@ -19,13 +19,8 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <div className="container">
+        <div className="container-flex">
           <div className="row">
-            <div className="card col-6 offset-3">
-              <div className="card-header">
-                {'Add New Contact'}
-              </div>
-              <div className="card-body">
                 <NewContactForm
                   missingFields={this.props.contactFormMissingFields}
                   warningMessage={this.props.contactFormWarning}
@@ -35,14 +30,12 @@ class App extends Component {
                   setNewContactContext={this.props.setNewContactContext}
                   setNewContactNumber={this.props.setNewContactNumber}
                   setCountryCode={this.props.setCountryCode} />
-              </div>
             </div>
           </div>
           <div className="row">
             <DemoTable data={this.props.contacts.toJS()}/>
           </div>
         </div>
-      </div>
     )
   }
 }
