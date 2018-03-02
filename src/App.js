@@ -20,22 +20,20 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <div className="container-flex">
-          <div className="row">
-                <NewContactForm
-                  missingFields={this.props.contactFormMissingFields}
-                  warningMessage={this.props.contactFormWarning}
-                  handleFormSubmit={this.props.handleContactFormSubmit}
-                  fields={this.props.newContactFormFields}
-                  setNewContactName={this.props.setNewContactName}
-                  setNewContactContext={this.props.setNewContactContext}
-                  setNewContactNumber={this.props.setNewContactNumber}
-                  setCountryCode={this.props.setCountryCode} />
-            </div>
-          </div>
-          <div className="row">
-            <DemoTable data={this.props.contacts.toJS()}/>
-          </div>
+            <NewContactForm
+              missingFields={this.props.contactFormMissingFields}
+              warningMessage={this.props.contactFormWarning}
+              handleFormSubmit={this.props.handleContactFormSubmit}
+              fields={this.props.newContactFormFields}
+              setNewContactName={this.props.setNewContactName}
+              setNewContactContext={this.props.setNewContactContext}
+              setNewContactNumber={this.props.setNewContactNumber}
+              setCountryCode={this.props.setCountryCode} />
         </div>
+        <div className="container-flex">
+          <DemoTable data={this.props.contacts.toJS()}/>
+        </div>
+      </div>
     )
   }
 }

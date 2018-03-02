@@ -32,7 +32,7 @@ describe('sagas', () => {
     })
   })
 
-    context('validateAndPostNewContact', () => {
+  context('validateAndPostNewContact', () => {
     const name = 'Jez'
     const number = null
     const context = null

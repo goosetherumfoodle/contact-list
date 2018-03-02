@@ -6,7 +6,7 @@ import DemoTableActions from './DemoTableActions'
 
 const columns = [
   {key: 'name', header: 'Name', sortable: true, searchable: true},
-  {key: 'number', header: '#', searchable: true, primaryKey: true},
+  {key: 'number', header: 'Phone', searchable: true, primaryKey: true},
   {key: 'context', header: 'Context', sortable: true, searchable: true},
   {key: 'actions', header: 'Actions', Component: DemoTableActions}
 ]
@@ -21,11 +21,11 @@ const propTypes = {
 class DemoTable extends Component {
   render() {
     return (
+      <div className='col'>
       <Table
         {...this.props}
-        selectable
-        columns={columns}
-      />
+        columns={columns} />
+        </div>
     )
   }
 }

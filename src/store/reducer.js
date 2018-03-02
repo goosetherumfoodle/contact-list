@@ -91,7 +91,7 @@ export default function reducer(state = initialState, action) {
     return state.set('contactFormMissingFields', action.payload.bool)
   case actionTypes.CLEAR_CONTACT_FORM:
     return state.set('contactFormMissingFields', false)
-                .set('newContactForm', initialState.get('newContactForm'))
+      .set('newContactForm', initialState.get('newContactForm'))
   case actionTypes.SET_GENERAL_WARNING:
     return state.setIn(['newContactForm', 'generalWarning'], action.payload.message)
   case actionTypes.VALIDATE_NEW_CONTACT_FORM:

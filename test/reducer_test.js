@@ -337,7 +337,7 @@ describe('reducer', () => {
     )
   })
 
-    it('setting general warning text', () => {
+  it('setting general warning text', () => {
     const initialState = fromJS({
       newContactForm: {
         generalWarning: false,
@@ -353,16 +353,16 @@ describe('reducer', () => {
 
     expect(nextState).to.equal(
       fromJS({
-      newContactForm: {
-        generalWarning: 'warning message',
-        countryCode: 'DE',
-        phoneNumber: '9876543210',
-        formattedNumber: null,
-        invalidNumber: null
-      }
-    })
+        newContactForm: {
+          generalWarning: 'warning message',
+          countryCode: 'DE',
+          phoneNumber: '9876543210',
+          formattedNumber: null,
+          invalidNumber: null
+        }
+      })
     )
-    })
+  })
 
   describe('validating the new contact form', () => {
     context('with valid fields', () => {
@@ -417,12 +417,12 @@ describe('reducer', () => {
 
         expect(nextState).to.equal(
           fromJS({
-          newContactForm: {
-            name: '',
-            context: 'horse',
-            generalWarning: 'Please fill in missing fields'
-          }
-        })
+            newContactForm: {
+              name: '',
+              context: 'horse',
+              generalWarning: 'Please fill in missing fields'
+            }
+          })
         )
       })
     })
@@ -442,12 +442,12 @@ describe('reducer', () => {
 
         expect(nextState).to.equal(
           fromJS({
-          newContactForm: {
-            name: 'Jez',
-            context: '',
-            generalWarning: 'Please fill in missing fields'
-          }
-        })
+            newContactForm: {
+              name: 'Jez',
+              context: '',
+              generalWarning: 'Please fill in missing fields'
+            }
+          })
         )
       })
     })
@@ -468,14 +468,14 @@ describe('reducer', () => {
 
         expect(nextState).to.equal(
           fromJS({
-          newContactForm: {
-            name: 'Jez',
-            context: 'flatmate',
-            generalWarning: 'Please check that the number you have entered is valid',
-            formattedNumber: '',
-            invalidNumber: true
-          }
-        })
+            newContactForm: {
+              name: 'Jez',
+              context: 'flatmate',
+              generalWarning: 'Please check that the number you have entered is valid',
+              formattedNumber: '',
+              invalidNumber: true
+            }
+          })
         )
       })
     })

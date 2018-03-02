@@ -25,8 +25,8 @@ describe('utils/phoneParser', () => {
       const badCountryCode = 'JX'
       it('throw an error', () => {
         expect(() => tryFormat({number, countryCode: badCountryCode}))
-                       .to.throw('Unknown country: JX')
-       })
+          .to.throw('Unknown country: JX')
+      })
     })
   })
 })
