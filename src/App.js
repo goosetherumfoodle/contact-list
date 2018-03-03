@@ -26,7 +26,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Welcome to your rolodex</h1>
         </header>
         {serverError(this.props.serverError)}
         <div className="container-flex mt-3 mb-3">
