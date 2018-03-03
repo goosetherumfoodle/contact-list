@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 import * as actions from './store/actions'
 import buildDemoTable from './components/buildDemoTable'
-import logo from './logo.svg'
+import logo from './rolodex.svg'
 import './App.css'
 import NewContactForm from './components/NewContactForm'
 
@@ -26,7 +26,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to your rolodex</h1>
+          <h1 className="App-title">Welcome to Rolodex</h1>
         </header>
         {serverError(this.props.serverError)}
         <div className="container-flex mt-3 mb-3">
