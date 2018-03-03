@@ -27,7 +27,7 @@ export default function NewContactForm(props) {
           <div className='row'>{formErrors(props.warningMessage)}</div>
           <div className='form-row'>
             <div className='col'>
-              <label for="exampleInputName1">Name</label>
+              <label>Name</label>
               <input disabled={!!props.serverError} type="name" className="form-control" id="exampleInputName1" placeholder="Jen Hamilton" value={props.fields.get('name')} onChange={e => props.setNewContactName(e.target.value)} />
             </div>
 

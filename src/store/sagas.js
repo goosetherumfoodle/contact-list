@@ -8,8 +8,8 @@ import * as api from '../utils/api'
 
 export function* fetchInitialContacts() {
   try {
-  const {data} = yield call(api.getContacts)
-  yield put(actions.setContacts(data))
+    const {data} = yield call(api.getContacts)
+    yield put(actions.setContacts(data))
   }
   catch({message}) {
     yield put(actions.setServerError(message))

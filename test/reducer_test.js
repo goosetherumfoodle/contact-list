@@ -257,14 +257,14 @@ describe('reducer', () => {
   it('removes a contact', () => {
     const initialState = fromJS({
       contacts: [{
-          context: 'Work',
-          name: 'Mark Corrigan',
-          number: '+12675558080'
-        }, {
-          context: 'Hair Blair Bunch',
-          name: 'Jeremy',
-          number: '+42343434343'
-        }]
+        context: 'Work',
+        name: 'Mark Corrigan',
+        number: '+12675558080'
+      }, {
+        context: 'Hair Blair Bunch',
+        name: 'Jeremy',
+        number: '+42343434343'
+      }]
     })
     const action = actions.removeContact('+42343434343')
 
@@ -553,6 +553,6 @@ describe('reducer', () => {
 
     const nextState = reducer(initialState, action)
 
-    expect(nextState).to.equal(fromJS({serverError: `We encounted the following error connecting to the server: serve whaaaaat?. Please reload the page`}))
+    expect(nextState).to.equal(fromJS({serverError: 'We encounted the following error connecting to the server: serve whaaaaat?. Please reload the page'}))
   })
 })

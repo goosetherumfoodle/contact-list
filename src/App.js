@@ -30,19 +30,19 @@ class App extends Component {
         </header>
         {serverError(this.props.serverError)}
         <div className="container-flex mt-3 mb-3">
-            <NewContactForm
-              missingFields={this.props.contactFormMissingFields}
-              warningMessage={this.props.contactFormWarning}
-              handleFormSubmit={this.props.handleContactFormSubmit}
-              fields={this.props.newContactFormFields}
-              setNewContactName={this.props.setNewContactName}
-              setNewContactContext={this.props.setNewContactContext}
-              setNewContactNumber={this.props.setNewContactNumber}
-              setCountryCode={this.props.setCountryCode}
-              serverError={this.props.serverError} />
+          <NewContactForm
+            missingFields={this.props.contactFormMissingFields}
+            warningMessage={this.props.contactFormWarning}
+            handleFormSubmit={this.props.handleContactFormSubmit}
+            fields={this.props.newContactFormFields}
+            setNewContactName={this.props.setNewContactName}
+            setNewContactContext={this.props.setNewContactContext}
+            setNewContactNumber={this.props.setNewContactNumber}
+            setCountryCode={this.props.setCountryCode}
+            serverError={this.props.serverError} />
         </div>
         <div className="container-flex">
-        <DemoTable data={this.props.contacts.toJS()} />
+          <DemoTable data={this.props.contacts.toJS()} />
         </div>
       </div>
     )

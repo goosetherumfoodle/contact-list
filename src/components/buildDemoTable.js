@@ -23,10 +23,10 @@ const propTypes = {
 function buildDemoTable(columns) {
   return (props) => {
     return(
-        <div className='col'>
-      <Table
-      {...props}
-       columns={columns} />
+      <div className='col'>
+        <Table
+          {...props}
+          columns={columns} />
       </div>
     )
   }

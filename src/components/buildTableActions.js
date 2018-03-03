@@ -12,7 +12,7 @@ function buildTableActions(actions) {
     return (
       <span onClick={handleDelete}>
         <i className='fa fa-trash' />
-        </span>
+      </span>
     )
   }
 }
