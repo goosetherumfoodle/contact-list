@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 
 import * as actions from './store/actions'
-import DemoTable from './components/DemoTable'
+import buildDemoTable from './components/buildDemoTable'
 import logo from './logo.svg'
 import './App.css'
 import NewContactForm from './components/NewContactForm'
@@ -13,6 +13,7 @@ class App extends Component {
   }
 
   render() {
+    const DemoTable = buildDemoTable(this.props.contactDelete)
     return (
       <div className="App">
         <header className="App-header">
@@ -31,7 +32,7 @@ class App extends Component {
               setCountryCode={this.props.setCountryCode} />
         </div>
         <div className="container-flex">
-          <DemoTable data={this.props.contacts.toJS()}/>
+        <DemoTable data={this.props.contacts.toJS()} />
         </div>
       </div>
     )
@@ -54,7 +55,8 @@ const mapDispatchToProps = dispatch => {
     setNewContactNumber: (number) => dispatch(actions.setNewContactNumber(number)),
     setNewContactContext: (context) => dispatch(actions.setNewContactContext(context)),
     setCountryCode: (code) => dispatch(actions.setNewContactCountryCode(code)),
-    handleContactFormSubmit: (fields) => {dispatch(actions.submitNewContact(fields))}
+    handleContactFormSubmit: (fields) => {dispatch(actions.submitNewContact(fields))},
+    contactDelete: id => console.log('delete clicked! with: ' + id)
   }
 }
 
