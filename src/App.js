@@ -7,6 +7,14 @@ import logo from './logo.svg'
 import './App.css'
 import NewContactForm from './components/NewContactForm'
 
+function serverError(warning) {
+  if (warning) {
+    return <div className='col alert alert-danger'>{warning}</div>
+  } else {
+    return null
+  }
+}
+
 class App extends Component {
   componentDidMount() {
     this.props.fetchInitialContacts()
@@ -20,7 +28,8 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <div className="container-flex">
+        {serverError(this.props.serverError)}
+        <div className="container-flex mt-3 mb-3">
             <NewContactForm
               missingFields={this.props.contactFormMissingFields}
               warningMessage={this.props.contactFormWarning}
@@ -29,7 +38,8 @@ class App extends Component {
               setNewContactName={this.props.setNewContactName}
               setNewContactContext={this.props.setNewContactContext}
               setNewContactNumber={this.props.setNewContactNumber}
-              setCountryCode={this.props.setCountryCode} />
+              setCountryCode={this.props.setCountryCode}
+              serverError={this.props.serverError} />
         </div>
         <div className="container-flex">
         <DemoTable data={this.props.contacts.toJS()} />
@@ -44,7 +54,8 @@ const mapStateToProps = ({contact}) => {
     contacts: contact.get('contacts'),
     newContactFormFields: contact.get('newContactForm'),
     contactFormMissingFields: contact.get('contactFormMissingFields'),
-    contactFormWarning: contact.getIn(['newContactForm', 'generalWarning'])
+    contactFormWarning: contact.getIn(['newContactForm', 'generalWarning']),
+    serverError: contact.get('serverError'),
   }
 }
 
@@ -56,7 +67,7 @@ const mapDispatchToProps = dispatch => {
     setNewContactContext: (context) => dispatch(actions.setNewContactContext(context)),
     setCountryCode: (code) => dispatch(actions.setNewContactCountryCode(code)),
     handleContactFormSubmit: (fields) => {dispatch(actions.submitNewContact(fields))},
-    contactDelete: id => console.log('delete clicked! with: ' + id)
+    contactDelete: id => dispatch(actions.deleteContact(id))
   }
 }
 

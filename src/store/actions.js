@@ -14,6 +14,20 @@ export function addContact(contact) {
   }
 }
 
+export function deleteContact(number) {
+  return {
+    type: actionTypes.DELETE_CONTACT,
+    payload: {number}
+  }
+}
+
+export function removeContact(number) {
+  return {
+    type: actionTypes.REMOVE_CONTACT,
+    payload: {number}
+  }
+}
+
 export function fetchInitialContacts() {
   return {type: actionTypes.FETCH_INITIAL_CONTACTS}
 }
@@ -67,6 +81,13 @@ export function setNewContactCountryCode(code) {
 export function setGeneralWarning(message) {
   return {
     type: actionTypes.SET_GENERAL_WARNING,
+    payload: {message}
+  }
+}
+
+export function setServerError(message) {
+  return {
+    type: actionTypes.SET_SERVER_ERROR,
     payload: {message}
   }
 }

@@ -21,7 +21,6 @@ const propTypes = {
 
 
 function buildDemoTable(columns) {
-//  console.log('columns in HOC: ' + columns[3]['Component'])
   return (props) => {
     return(
         <div className='col'>

@@ -254,6 +254,33 @@ describe('reducer', () => {
     )
   })
 
+  it('removes a contact', () => {
+    const initialState = fromJS({
+      contacts: [{
+          context: 'Work',
+          name: 'Mark Corrigan',
+          number: '+12675558080'
+        }, {
+          context: 'Hair Blair Bunch',
+          name: 'Jeremy',
+          number: '+42343434343'
+        }]
+    })
+    const action = actions.removeContact('+42343434343')
+
+    const nextState = reducer(initialState, action)
+
+    expect(nextState).to.equal(
+      fromJS({
+        contacts: [{
+          context: 'Work',
+          name: 'Mark Corrigan',
+          number: '+12675558080'
+        }]
+      })
+    )
+  })
+
   // todo: totally remove these
   // I think we're just gonna do the formatting on input, not submission
   // describe('phone number parsing', () => {
@@ -518,5 +545,14 @@ describe('reducer', () => {
         )
       })
     })
+  })
+
+  it('setting server error text', () => {
+    const initialState = fromJS({serverError: false})
+    const action = actions.setServerError('serve whaaaaat?')
+
+    const nextState = reducer(initialState, action)
+
+    expect(nextState).to.equal(fromJS({serverError: `We encounted the following error connecting to the server: serve whaaaaat?. Please reload the page`}))
   })
 })

@@ -19,7 +19,8 @@ const initialState = fromJS({
     invalidNumber: false,
     generalWarning: false
   },
-  contacts: []
+  contacts: [],
+  serverError: false
 })
 
 function isPresent(field) {
@@ -75,6 +76,8 @@ export default function reducer(state = initialState, action) {
     return state.set('contacts', fromJS(action.payload.contacts))
   case actionTypes.ADD_CONTACT:
     return state.update('contacts', contacts => contacts.push(fromJS(action.payload.contact)))
+  case actionTypes.REMOVE_CONTACT:
+    return state.update('contacts', contacts => contacts.filterNot(contact => contact.get('number') === action.payload.number))
   case actionTypes.SET_NEW_CONTACT_NAME:
     return state.setIn(['newContactForm', 'name'], action.payload.name)
   case actionTypes.SET_NEW_CONTACT_CONTEXT:
@@ -97,9 +100,10 @@ export default function reducer(state = initialState, action) {
   case actionTypes.VALIDATE_NEW_CONTACT_FORM:
     const warningMsg = validateForm(state)
     return state.setIn(['newContactForm', 'generalWarning'], warningMsg)
-  default:
-    return state
+  case actionTypes.SET_SERVER_ERROR:
+    return state.set('serverError', ` Please reload the page. We encounted the following error connecting to the server: ${JSON.stringify(action.payload.message)}.`)
   }
+  return state
 }
 
 const setPhoneMetaFields = compose([setNumberValidity, setFormattedNumber, setPrettyPrint])

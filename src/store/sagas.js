@@ -4,11 +4,16 @@ import {isString} from 'lodash'
 
 import * as actionTypes from './actionTypes'
 import * as actions from './actions'
-import {getContacts, postContact} from '../utils/api'
+import * as api from '../utils/api'
 
 export function* fetchInitialContacts() {
-  const {data} = yield call(getContacts)
+  try {
+  const {data} = yield call(api.getContacts)
   yield put(actions.setContacts(data))
+  }
+  catch({message}) {
+    yield put(actions.setServerError(message))
+  }
 }
 
 export function* validateAndPostNewContact() {
@@ -16,18 +21,37 @@ export function* validateAndPostNewContact() {
   const state = yield select(s => s.contact)
   const warning = state.getIn(['newContactForm', 'generalWarning'])
   if (warning === false) {
-    const formattedNumber = state.getIn(['newContactForm', 'formattedNumber'])
-    const name = state.getIn(['newContactForm', 'name'])
-    const context = state.getIn(['newContactForm', 'context'])
-    yield call(postContact, {
-      id: formattedNumber,
-      name,
-      number: formattedNumber,
-      context
-    })
-    yield put(actions.addContact({name, number: formattedNumber, context}))
-    yield put(actions.clearContactForm())
+    try {
+      const formattedNumber = state.getIn(['newContactForm', 'formattedNumber'])
+      const name = state.getIn(['newContactForm', 'name'])
+      const context = state.getIn(['newContactForm', 'context'])
+      yield call(api.postContact, {
+        id: formattedNumber,
+        name,
+        number: formattedNumber,
+        context
+      })
+      yield put(actions.addContact({name, number: formattedNumber, context}))
+      yield put(actions.clearContactForm())
+    }
+    catch({message}) {
+      yield put(actions.setServerError(message))
+    }
   }
+}
+
+export function* deleteContact({payload: {number}}) {
+  yield put(actions.removeContact(number))
+  try {
+    yield call(api.deleteContact, {id: number})
+  }
+  catch({message}) {
+    yield put(actions.setServerError(message))
+  }
+}
+
+function* watchDeleteContact() {
+  yield takeEvery(actionTypes.DELETE_CONTACT, deleteContact)
 }
 
 function* watchFetchInitialContacts() {
@@ -41,6 +65,7 @@ function* watchValidateAndPostNewContact() {
 export default function* rootSaga() {
   yield all([
     watchFetchInitialContacts(),
-    watchValidateAndPostNewContact()
+    watchValidateAndPostNewContact(),
+    watchDeleteContact()
   ])
 }

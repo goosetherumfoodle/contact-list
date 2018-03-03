@@ -11,7 +11,7 @@ function buildTableActions(actions) {
     const handleDelete = () => actions.deleteHandler(props.row.number)
     return (
       <span onClick={handleDelete}>
-        <i className='fas fa-trash' />
+        <i className='fa fa-trash' />
         </span>
     )
   }

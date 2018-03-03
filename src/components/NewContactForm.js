@@ -28,17 +28,17 @@ export default function NewContactForm(props) {
           <div className='form-row'>
             <div className='col'>
               <label for="exampleInputName1">Name</label>
-              <input type="name" className="form-control" id="exampleInputName1" placeholder="Jen Hamilton" value={props.fields.get('name')} onChange={e => props.setNewContactName(e.target.value)} />
+              <input disabled={!!props.serverError} type="name" className="form-control" id="exampleInputName1" placeholder="Jen Hamilton" value={props.fields.get('name')} onChange={e => props.setNewContactName(e.target.value)} />
             </div>
 
             <div className='col'>
               <label>Context</label>
-              <input type="context" className="form-control" id="exampleInputContext1" placeholder="work, school, friends, etc" onChange={e => props.setNewContactContext(e.target.value)} value={props.fields.get('context')} />
+              <input disabled={!!props.serverError} type="context" className="form-control" id="exampleInputContext1" placeholder="work, school, friends, etc" onChange={e => props.setNewContactContext(e.target.value)} value={props.fields.get('context')} />
             </div>
 
             <div className='col'>
               <label>Number</label>
-              <input type="phone" className={`form-control ${cssFeedback(props.fields.get('invalidNumber'))}`} id="exampleInputPhone1" aria-describedby="phoneHelp" placeholder='555-555-5555' onChange={e => props.setNewContactNumber(e.target.value)} value={props.fields.get('phoneNumber')} />
+              <input disabled={!!props.serverError} type="phone" className={`form-control ${cssFeedback(props.fields.get('invalidNumber'))}`} id="exampleInputPhone1" aria-describedby="phoneHelp" placeholder='555-555-5555' onChange={e => props.setNewContactNumber(e.target.value)} value={props.fields.get('phoneNumber')} />
               <div className='invalid-feedback'>Invalid Number</div>
               <small className='form-text text-muted'>{props.fields.get('prettyPrintPhoneNumber')}</small>
             </div>
@@ -53,7 +53,7 @@ export default function NewContactForm(props) {
             </div>
 
             <div className='col mt-4'>
-              <input type="submit" value='Submit' className="btn btn-primary" />
+              <input disabled={!!props.serverError} type="submit" value='Submit' className="btn btn-primary" />
             </div>
           </div>
         </form>
