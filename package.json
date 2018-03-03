@@ -21,7 +21,7 @@
     "sematable": "^1.9.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "mocha --require babel-core/register --require ./test/test_helper.js",
     "eject": "react-scripts eject",
