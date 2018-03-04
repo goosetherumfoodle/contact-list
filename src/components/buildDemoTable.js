@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
 import sematable, { Table } from 'sematable'
-import PropTypes from 'prop-types'
 
 import buildTableActions from './buildTableActions'
 
@@ -12,13 +11,6 @@ function buildColumns(deleteHandler) {
     {key: 'actions', header: 'Actions', Component: buildTableActions({deleteHandler})}
   ])
 }
-
-const propTypes = {
-  headers: PropTypes.object.isRequired,
-  data: PropTypes.array.isRequired,
-  primaryKey: PropTypes.string.isRequired,
-}
-
 
 function buildDemoTable(columns) {
   return (props) => {
@@ -32,7 +24,6 @@ function buildDemoTable(columns) {
   }
 }
 
-// DemoTable.propTypes = propTypes
 export default (deleteHandler) => {
   return (sematable(
     'allApps',

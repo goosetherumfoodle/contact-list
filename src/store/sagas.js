@@ -1,6 +1,5 @@
 import {call, put, takeEvery, all, select} from 'redux-saga/effects'
 import 'regenerator-runtime/runtime'
-import {isString} from 'lodash'
 
 import * as actionTypes from './actionTypes'
 import * as actions from './actions'

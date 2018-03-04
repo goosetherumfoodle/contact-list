@@ -97,9 +97,10 @@ export default function reducer(state = initialState, action) {
       .set('newContactForm', initialState.get('newContactForm'))
   case actionTypes.SET_GENERAL_WARNING:
     return state.setIn(['newContactForm', 'generalWarning'], action.payload.message)
-  case actionTypes.VALIDATE_NEW_CONTACT_FORM:
+  case actionTypes.VALIDATE_NEW_CONTACT_FORM: {
     const warningMsg = validateForm(state)
     return state.setIn(['newContactForm', 'generalWarning'], warningMsg)
+  }
   case actionTypes.SET_SERVER_ERROR:
     return state.set('serverError', ` Please reload the page. We encounted the following error connecting to the server: ${JSON.stringify(action.payload.message)}.`)
   }

@@ -1,5 +1,6 @@
 import React from 'react'
 import metadata from '../metadata.min.json'
+import PropTypes from 'react-proptypes'
 
 function formErrors(warning) {
   if (warning) {
@@ -11,11 +12,31 @@ function formErrors(warning) {
 
 function cssFeedback(invalidNumber) {return invalidNumber ? 'is-invalid' : ''}
 
+const propTypes = {
+  headers: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
+  primaryKey: PropTypes.string.isRequired,
+  handleFormSubmit: PropTypes.func.isRequired,
+  fields: PropTypes.object.isRequired,
+  warningMessage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool
+  ]).isRequired,
+  setCountryCode: PropTypes.func.isRequired,
+  setNewContactContext: PropTypes.func.isRequired,
+  setNewContactName: PropTypes.func.isRequired,
+  setNewContactNumber: PropTypes.func.isRequired,
+  serverError: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool
+  ]).isRequired
+}
+
 function eachCountryCode() {
   return Object.keys(metadata.countries).map(countryCode => <option key={countryCode} value={countryCode}>{countryCode}</option>)
 }
 
-export default function NewContactForm(props) {
+function NewContactForm(props) {
   return(
     <div className="card col-10 offset-1">
       <div className="card-header">
@@ -61,3 +82,6 @@ export default function NewContactForm(props) {
     </div>
   )
 }
+
+NewContactForm.propTypes = propTypes
+export default NewContactForm

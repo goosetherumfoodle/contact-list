@@ -7,7 +7,7 @@ const base = axios.create({
 export function getContacts() {return base.get('/contacts')}
 
 export function postContact({id, name, number, context}) {
-  return base.post('/contacts', {id, number, name, number, context})
+  return base.post('/contacts', {id, name, number, context})
 }
 
 export function deleteContact({id}) {

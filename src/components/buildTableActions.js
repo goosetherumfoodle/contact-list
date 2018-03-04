@@ -1,13 +1,14 @@
-import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
+import React from 'react'
+import PropTypes from 'react-proptypes'
 
-// const propTypes = {
-//   row: PropTypes.object.isRequired,
-// };
-
+const propTypes = {
+  row: PropTypes.shape({
+    number: PropTypes.string.isRequired
+  }).isRequired
+}
 
 function buildTableActions(actions) {
-  return props => {
+  const TableActions = (props) => {
     const handleDelete = () => actions.deleteHandler(props.row.number)
     return (
       <span onClick={handleDelete}>
@@ -15,6 +16,8 @@ function buildTableActions(actions) {
       </span>
     )
   }
+  TableActions.propTypes = propTypes
+  return TableActions
 }
-//AppsTableActions.propTypes = propTypes;
+
 export default buildTableActions
