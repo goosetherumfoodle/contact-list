@@ -1,6 +1,6 @@
 import React from 'react'
 import metadata from '../metadata.min.json'
-import PropTypes from 'react-proptypes'
+import PropTypes from 'prop-types'
 
 function formErrors(warning) {
   if (warning) {
