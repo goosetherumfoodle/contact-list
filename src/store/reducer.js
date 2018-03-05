@@ -103,8 +103,9 @@ export default function reducer(state = initialState, action) {
   }
   case actionTypes.SET_SERVER_ERROR:
     return state.set('serverError', `Please reload the page. We encounted the following error connecting to the server: ${JSON.stringify(action.payload.message)}`)
+  default:
+    return state
   }
-  return state
 }
 
 const setPhoneMetaFields = compose([setNumberValidity, setFormattedNumber, setPrettyPrint])
