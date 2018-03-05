@@ -102,7 +102,7 @@ export default function reducer(state = initialState, action) {
     return state.setIn(['newContactForm', 'generalWarning'], warningMsg)
   }
   case actionTypes.SET_SERVER_ERROR:
-    return state.set('serverError', ` Please reload the page. We encounted the following error connecting to the server: ${JSON.stringify(action.payload.message)}.`)
+    return state.set('serverError', `Please reload the page. We encounted the following error connecting to the server: ${JSON.stringify(action.payload.message)}`)
   }
   return state
 }

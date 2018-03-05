@@ -553,6 +553,6 @@ describe('reducer', () => {
 
     const nextState = reducer(initialState, action)
 
-    expect(nextState).to.equal(fromJS({serverError: 'We encounted the following error connecting to the server: serve whaaaaat?. Please reload the page'}))
+    expect(nextState).to.equal(fromJS({serverError: 'Please reload the page. We encounted the following error connecting to the server: "serve whaaaaat?"'}))
   })
 })
